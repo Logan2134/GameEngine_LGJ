@@ -16,6 +16,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{9521f655-ecc5-4cac-8831-5e0893fec9b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{2e0b5526-045c-40ce-bf09-61d9fe7031da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -23,6 +26,9 @@
     </ClCompile>
     <ClCompile Include="Core\Engine.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\RenderingSystem.cpp">
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="Core\Engine.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\RenderingSystem.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
