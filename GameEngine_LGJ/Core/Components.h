@@ -31,3 +31,25 @@ public:
 	}
 };
 ECS_DEFINE_TYPE(sprite2D)
+
+struct Animator
+{
+public:
+	ECS_DECLARE_TYPE;
+
+	int width, height, currentColumn, currentRow, totalColumns, totalRows;
+	
+	float currentTime, nextFrameTime;
+	Animator(int width, int height, float nextFrameTime, int columns, int rows)
+	{
+		currentColumn = 0;
+		currentRow = 0;
+		currentTime = 0.0f;
+		totalColumns = columns;
+		totalRows = rows;
+		this->height = height;
+		this->width = width;
+		this->nextFrameTime = nextFrameTime;
+	}
+
+}; ECS_DEFINE_TYPE(Animator)

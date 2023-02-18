@@ -16,15 +16,17 @@ int main(int argc, char* args[])
 
 	//add systems to the engine
 	GameEngine.AddSystem(new RenderingSystem());
+	GameEngine.AddSystem(new AnimationSystem());
 
 	//create 250 entites to the world
 	for (int i = 0; i < 250; i++)
 	{
-		for (int j = 0; j < 1; j++)
+		for (int j = 0; j < 10; j++)
 		{
 			myEnt = GameEngine.world->create();
-			myEnt->assign<Transform>(i * 250, j * 32);
-			myEnt->assign<Sprite2D>("../Debug/Pictures/hero.png");
+			myEnt->assign<Transform>(i * 25, j * 32);
+			myEnt->assign<Sprite2D>("../Debug/Pictures/herosheet.png");
+			myEnt->assign<Animator>(32, 32, 200.0f, 4, 1);
 			std::cout << "id: " << myEnt->getEntityId() << std::endl;
 		}
 	}
