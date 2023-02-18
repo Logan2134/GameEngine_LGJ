@@ -30,7 +30,7 @@
     <ClCompile Include="Systems\AnimationSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Systems\InputSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,6 +48,9 @@
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="Systems\RenderingSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\InputSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>

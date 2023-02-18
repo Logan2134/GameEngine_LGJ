@@ -17,12 +17,15 @@ private:
 
 private:
 	Engine(void) = default;
-	// required to prevent the reference from being copied, moved, or assigned
-	Engine(Engine& copy); // hide copy constructer
-	Engine(Engine&& other); // hide move constructer
-	Engine& operator= (Engine& copy); // hide assignment operator
 	~Engine(void) = default;
-
+	
+	
+public:
+	// required to prevent the reference from being copied, moved, or assigned
+	Engine(Engine& copy) = delete; // hide copy constructer
+	Engine(Engine&& other) = delete; // hide move constructer
+	Engine& operator= (Engine& copy) = delete; // hide assignment operator
+	
 public:
 	static Engine& GetInstance(void);
 	void Start(sf::RenderWindow* window);
