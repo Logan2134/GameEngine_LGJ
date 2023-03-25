@@ -22,6 +22,7 @@ int main(int argc, char* args[])
 	GameEngine.AddSystem(new AnimationSystem());
 	GameEngine.AddSystem(new MovementSystem());
 	GameEngine.AddSystem(new InputSystem());
+	GameEngine.AddSystem(new physicsSystem());
 	
 	background = GameEngine.world->create();
 	background->assign<Transform>(0, 0, false);
@@ -33,6 +34,7 @@ int main(int argc, char* args[])
 	tux->assign<Sprite2D>("../Debug/Pictures/Tux_from_linux.png");
 	tux->assign<Animator>(56, 72, 2000.0f, 3, 9);
 	tux->assign<InputController>();
+	tux->assign<boxColider>();
 	tux->get<Animator>()->currentRow = 8;
 	std::cout << "id: " << tux->getEntityId() << std::endl;
 	
@@ -40,6 +42,7 @@ int main(int argc, char* args[])
 	myEnt->assign<Transform>(200, 300, true);
 	myEnt->assign<Sprite2D>("../Debug/Pictures/herosheet.png");
 	myEnt->assign<Animator>(32, 32, 200.0f, 4, 1);
+	myEnt->assign<boxColider>();
 	std::cout << "id: " << myEnt->getEntityId() << std::endl;
 
 	//pass window refernce to engine and start

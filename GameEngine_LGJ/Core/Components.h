@@ -90,3 +90,22 @@ public:
 	}
 
 }; ECS_DEFINE_TYPE(InputController)
+
+struct boxColider
+{
+public:
+	ECS_DECLARE_TYPE;
+	float leftEdge, rightEdge, topEdge, bottomEdge;
+	boxColider()
+	{
+		std::memset(this, 0.0f, sizeof(boxColider));
+
+	}
+	void update(float x, float y, float width, float height)
+	{
+		this->leftEdge = x;
+		this->rightEdge = x + width;
+		this->topEdge = y;
+		this->bottomEdge = y + height;
+	}
+};
