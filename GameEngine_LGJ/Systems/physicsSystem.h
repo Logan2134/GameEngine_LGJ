@@ -7,36 +7,36 @@ public:
 	~physicsSystem() = default;
 
 	bool IsColliding(
-		ECS::ComponentHandle<boxColider>touchingBox,
-		ECS::ComponentHandle<boxColider>touchedBox,
+		ECS::ComponentHandle<BoxCollider>touchingBox,
+		ECS::ComponentHandle<BoxCollider>touchedBox,
 		float x, float y
 	);
 
 	bool IsColliding(
-		ECS::ComponentHandle<boxColider>touchingBox,
+		ECS::ComponentHandle<BoxCollider>touchingBox,
 		sf::RectangleShape touchRectangle,
 		float x, float y
 	);
 	
 	bool IsColliding(
-		ECS::ComponentHandle<boxColider>touchingBox,
-		ECS::ComponentHandle<boxColider>touchedBox
+		ECS::ComponentHandle<BoxCollider>touchingBox,
+		ECS::ComponentHandle<BoxCollider>touchedBox
 		);
 	
 	bool IsColliding(
-		ECS::ComponentHandle<boxColider> touchingBox,
+		ECS::ComponentHandle<BoxCollider> touchingBox,
 		sf::RectangleShape touchedRectangle
 	);
 
 	void PushEntity(
 		ECS::ComponentHandle<Transform> transform,
-		ECS::ComponentHandle<boxColider> touchingBox,
-		ECS::ComponentHandle<boxColider> touchedBox
+		ECS::ComponentHandle<BoxCollider> touchingBox,
+		ECS::ComponentHandle<BoxCollider> touchedBox
 	);
 
 	void PushEntity(
 		ECS::ComponentHandle<Transform> transform,
-		ECS::ComponentHandle<boxColider> touchingBox,
+		ECS::ComponentHandle<BoxCollider> touchingBox,
 		sf::RectangleShape touchedRectangle
 	);
 

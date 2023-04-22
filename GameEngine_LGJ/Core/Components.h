@@ -14,7 +14,8 @@ public:
 	float xSpeedMod, ySpeedMod;
 	bool bCollide;
 
-	Transform(float xPos, float yPos, bool bCollide, float xSpeed = 0.0f, float ySpeed = 0.0f, float rotationAngle = 0.0f, float rotationSpeed = 0.0f)
+
+	Transform(float xPos, float yPos, float xSpeed = 0.0f, float ySpeed = 0.0f, float rotationAngle = 0.0f, float rotationSpeed = 0.0f)
 	{
 		this->xPos = xPos;
 		this->yPos = yPos;
@@ -24,7 +25,7 @@ public:
 		this->ySpeedMod = ySpeed;
 		this->rotationAngle = rotationAngle;
 		this->rotationSpeed = rotationSpeed;
-		this->bCollide = bCollide;
+		this->bCollide = false;
 	}
 
 	void Move()
@@ -38,6 +39,7 @@ public:
 	
 };
 ECS_DEFINE_TYPE(Transform)
+
 struct Sprite2D
 {
 public:
@@ -51,7 +53,7 @@ public:
 
 	}
 };
-ECS_DEFINE_TYPE(sprite2D)
+ECS_DEFINE_TYPE(Sprite2D)
 
 struct Animator
 {
@@ -91,14 +93,14 @@ public:
 
 }; ECS_DEFINE_TYPE(InputController)
 
-struct boxColider
+struct BoxCollider
 {
 public:
 	ECS_DECLARE_TYPE;
 	float leftEdge, rightEdge, topEdge, bottomEdge;
-	boxColider()
+	BoxCollider()
 	{
-		std::memset(this, 0.0f, sizeof(boxColider));
+		std::memset(this, 0.0f, sizeof(BoxCollider));
 
 	}
 	void update(float x, float y, float width, float height)
@@ -109,3 +111,28 @@ public:
 		this->bottomEdge = y + height;
 	}
 };
+struct Tag
+{
+public:
+	ECS_DECLARE_TYPE;
+	std::vector<std::string> tagNames;
+	Tag() = default;
+	void AddTag(std::string tag) {
+		this->tagNames.push_back(tag);
+	
+	}
+	bool ContainsTag(std::string tag)
+	{
+		return std::find(this->tagNames.begin(), this->tagNames.end(), tag) != this->tagNames.end();
+	}
+
+
+}; ECS_DEFINE_TYPE(Tag)
+
+struct Shooter
+{
+public:
+	ECS_DECLARE_TYPE;
+	float fireDelay, timeSinceLastShot;
+
+}; ECS_DEFINE_TYPE(Shooter)

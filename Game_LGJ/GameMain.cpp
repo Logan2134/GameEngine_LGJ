@@ -1,4 +1,6 @@
 #include "SFML/graphics.hpp"
+#include"Entities/Player.h"
+#include "Entities/Dummy.h"
 #include "Core/Engine.h"
 
 int main(int argc, char* args[])
@@ -14,8 +16,8 @@ int main(int argc, char* args[])
 
 	//create our first entity
 	ECS::Entity* background;
-	ECS::Entity* myEnt;
-	ECS::Entity* tux;
+	/*ECS::Entity* myEnt;
+	ECS::Entity* tux;*/
 
 	//add systems to the engine
 	GameEngine.AddSystem(new RenderingSystem());
@@ -29,21 +31,27 @@ int main(int argc, char* args[])
 	background->assign<Sprite2D>("../Debug/Pictures/bg.jpg");
 	std::cout << "id: " << background->getEntityId() << std::endl;
 	
-	tux = GameEngine.world->create();
-	tux->assign<Transform>(400, 400, true, 0.3f, 0.3f, 0.0f, 0.2f);
-	tux->assign<Sprite2D>("../Debug/Pictures/Tux_from_linux.png");
-	tux->assign<Animator>(56, 72, 2000.0f, 3, 9);
-	tux->assign<InputController>();
-	tux->assign<boxColider>();
-	tux->get<Animator>()->currentRow = 8;
-	std::cout << "id: " << tux->getEntityId() << std::endl;
+	//tux = GameEngine.world->create();
+	//tux->assign<Transform>(400, 400, true, 0.3f, 0.3f, 0.0f, 0.2f);
+	//tux->assign<Sprite2D>("../Debug/Pictures/Tux_from_linux.png");
+	//tux->assign<Animator>(56, 72, 2000.0f, 3, 9);
+	//tux->assign<InputController>();
+	//tux->assign<BoxCollider>();
+	//tux->get<Animator>()->currentRow = 8;
+	//std::cout << "id: " << tux->getEntityId() << std::endl;
+	//
+	//myEnt = GameEngine.world->create();
+	//myEnt->assign<Transform>(200, 300, true);
+	//myEnt->assign<Sprite2D>("../Debug/Pictures/herosheet.png");
+	//myEnt->assign<Animator>(32, 32, 200.0f, 4, 1);
+	//myEnt->assign<BoxCollider>();
+	//std::cout << "id: " << myEnt->getEntityId() << std::endl;
+	//Create instances of entites 
 	
-	myEnt = GameEngine.world->create();
-	myEnt->assign<Transform>(200, 300, true);
-	myEnt->assign<Sprite2D>("../Debug/Pictures/herosheet.png");
-	myEnt->assign<Animator>(32, 32, 200.0f, 4, 1);
-	myEnt->assign<boxColider>();
-	std::cout << "id: " << myEnt->getEntityId() << std::endl;
+	Entity* player = new Player(sf::Vector2f(300.0f, 300.0f));
+	Entity* dummy = new Dummy("../debug/pictures/bluebox.png", sf::Vector2f(400.0f, 400.0f));
+
+	std::cout << dummy->entity->get<Transform>()->xPos << std::endl;
 
 	//pass window refernce to engine and start
 	GameEngine.Start(&window);
