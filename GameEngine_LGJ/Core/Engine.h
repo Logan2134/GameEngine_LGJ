@@ -8,16 +8,24 @@
 #include"../Systems/MovementSystem.h"
 #include "../Systems/InputSystem.h"
 #include"..\Systems\physicsSystem.h"
+#include"../Interface/States.h"
+#include "../Systems/TileMapSystem.h"
 
+class PauseMenu;
+class States;
+class MainCamera;
 
 class Engine
 {
 public:
 	sf::RenderWindow* window{ nullptr };
 	ECS::World* world{ nullptr };
+	PauseMenu* pauseMenu{ nullptr };
+	MainCamera* mainCamera{ nullptr };
 
 private:
 	bool bQuit;
+	const float deltaTime = 10.0f;
 
 private:
 	Engine(void) = default;
@@ -33,10 +41,10 @@ public:
 public:
 	static Engine& GetInstance(void);
 	void Start(sf::RenderWindow* window);
-	void AddSystem(ECS::EntitySystem* newSystem);
+	void AddSystem(ECS::EntitySystem* newSystem) const;
 
 private:
 	void Update(void);
-
+	void OnPaused()const;
 };
 

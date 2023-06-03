@@ -1,4 +1,5 @@
 #include "InputSystem.h"
+#include "../Interface/States.h"
 
 InputSystem::InputSystem(sf::RenderWindow* window)
 {
@@ -7,7 +8,10 @@ InputSystem::InputSystem(sf::RenderWindow* window)
 
 void InputSystem::tick(ECS::World* world, float DeltaTime)
 {
-	this->GetKeyEvents(world);
+	if (States::GetPausedState() == false)
+	{
+		this->GetKeyEvents(world);
+	}
 }
 
 void InputSystem::GetKeyEvents(ECS::World* world)

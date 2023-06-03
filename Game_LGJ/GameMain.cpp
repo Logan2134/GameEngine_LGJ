@@ -2,6 +2,8 @@
 #include"Entities/Player.h"
 #include "Entities/Dummy.h"
 #include "Core/Engine.h"
+#include "Entities/Enemy.h"
+
 
 int main(int argc, char* args[])
 {
@@ -25,6 +27,7 @@ int main(int argc, char* args[])
 	GameEngine.AddSystem(new MovementSystem());
 	GameEngine.AddSystem(new InputSystem());
 	GameEngine.AddSystem(new physicsSystem());
+	GameEngine.AddSystem(new TileMapSystem());
 	
 	background = GameEngine.world->create();
 	background->assign<Transform>(0, 0, false);
@@ -48,10 +51,12 @@ int main(int argc, char* args[])
 	//std::cout << "id: " << myEnt->getEntityId() << std::endl;
 	//Create instances of entites 
 	
-	Entity* player = new Player(sf::Vector2f(300.0f, 300.0f));
+	Entity* player = new Player(sf::Vector2f(300.0f, 300.0f),0.05f);
+	Entity* enemy = new Enemy(sf::Vector2f(200, 200),0.05f);
 	Entity* dummy = new Dummy("../debug/pictures/bluebox.png", sf::Vector2f(400.0f, 400.0f));
 
 	std::cout << dummy->entity->get<Transform>()->xPos << std::endl;
+	
 
 	//pass window refernce to engine and start
 	GameEngine.Start(&window);

@@ -19,6 +19,12 @@
     <Filter Include="Systems">
       <UniqueIdentifier>{2e0b5526-045c-40ce-bf09-61d9fe7031da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface Files">
+      <UniqueIdentifier>{50788be5-f827-4a55-bfe5-495cc4de3673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface Files\Gui_components">
+      <UniqueIdentifier>{9045c26f-824d-4b34-83b2-74b24032b361}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp">
@@ -39,11 +45,29 @@
     <ClCompile Include="Systems\physicsSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Interface\States.cpp">
+      <Filter>Interface Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Gui_Components\Button.cpp">
+      <Filter>Interface Files\Gui_components</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Gui_Components\ButtonMap.cpp">
+      <Filter>Interface Files\Gui_components</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\PauseMenu.cpp">
+      <Filter>Interface Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\MainCamera.cpp">
+      <Filter>Interface Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Tile.cpp">
+      <Filter>Interface Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\TileMapSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Components.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\ECS.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -64,6 +88,30 @@
     </ClInclude>
     <ClInclude Include="Systems\physicsSystem.h">
       <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\States.h">
+      <Filter>Interface Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Gui_Components\Button.h">
+      <Filter>Interface Files\Gui_components</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Gui_Components\ButtonMap.h">
+      <Filter>Interface Files\Gui_components</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\PauseMenu.h">
+      <Filter>Interface Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\MainCamera.h">
+      <Filter>Interface Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\tile.h">
+      <Filter>Interface Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\TileMapSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Components.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

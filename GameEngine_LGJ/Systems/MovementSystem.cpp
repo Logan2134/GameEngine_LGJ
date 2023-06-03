@@ -1,61 +1,107 @@
 #define _USE_MATH_DEFINES
 #include "MovementSystem.h"
+#include "../Interface/States.h"
 #include <cmath>
+#include <random>
 
 void MovementSystem::tick(ECS::World* world, float deltaTime)
 {
 	this->timer += deltaTime;
 
-	world->each<InputController, Transform, Sprite2D, Tag>(
-		[&](ECS::Entity*,
-			ECS::ComponentHandle<InputController> input,
-			ECS::ComponentHandle<Transform> transform,
-			ECS::ComponentHandle<Sprite2D> sprite,
-			ECS::ComponentHandle<Tag> tag
-			) -> void
-		{
-			// Center anchor point to sprite
-			sprite->self.setOrigin(sf::Vector2f(sprite->width / 2, sprite->height / 2));
+	if (States::GetPausedState() == false)
+	{
+		world->each< Transform, Sprite2D, Tag>(
+			[&](ECS::Entity* entity,
 
-			//const ECS::ComponentHandle<InputController> input = entity->get<InputController>();
-
-			if (tag->ContainsTag("Player") == true)
+				ECS::ComponentHandle<Transform> transform,
+				ECS::ComponentHandle<Sprite2D> sprite,
+				ECS::ComponentHandle<Tag> tag
+				) -> void
 			{
-				if (input->bInputActive == true)
+				// Center anchor point to sprite
+				sprite->self.setOrigin(sf::Vector2f(sprite->width / 2, sprite->height / 2));
+
+		const ECS::ComponentHandle<InputController> input = entity->get<InputController>();
+
+		if (tag->ContainsTag("Player") == true)
+		{
+			if (input->bInputActive == true)
+			{
+				if (input->w == true)
 				{
-					if (input->w == true)
-					{
-						transform->xSpeed = sin((sprite->self.getRotation() + 90.0) / 180.0 * M_PI) * transform->ySpeedMod;
-						transform->ySpeed = -cos((sprite->self.getRotation() + 90.0) / 180.0 * M_PI) * transform->ySpeedMod;
+					transform->xSpeed = static_cast<float>(
+						sin((static_cast<double>(sprite->self.getRotation()) + 90.0) / 180.0 * M_PI) * static_cast<double>(transform->xSpeedMod)
+						);
 
-						transform->Move();
-					}
-					else if (input->s == true)
-					{
-						transform->xSpeed = -sin((sprite->self.getRotation() + 90.0) / 180.0 * M_PI) * transform->ySpeedMod;
-						transform->ySpeed = cos((sprite->self.getRotation() + 90.0) / 180.0 * M_PI) * transform->ySpeedMod;
+					transform->ySpeed = static_cast<float>(
+						-cos((static_cast<double>(sprite->self.getRotation()) + 90.0) / 180.0 * M_PI) * static_cast<double>(transform->ySpeedMod)
+						);
 
-						transform->Move();
-					}
-					else
-					{
-						transform->xSpeed = 0;
-						transform->ySpeed = 0;
-					}
 
-					if (input->a == true)
-					{
-						sprite->self.rotate(-transform->rotationSpeed);
-					}
-					else if (input->d == true)
-					{
-						sprite->self.rotate(transform->rotationSpeed);
-					}
+					transform->Move();
+				}
+				else if (input->s == true)
+				{
+					transform->xSpeed = static_cast<float>(
+						-sin((static_cast<double>(sprite->self.getRotation()) + 90.0) / 180.0 * M_PI) * static_cast<double>(transform->xSpeedMod)
+						);
+					transform->ySpeed = static_cast<float>(
+						cos((static_cast<double>(sprite->self.getRotation()) + 90.0) / 180.0 * M_PI) * static_cast<double>(transform->ySpeedMod)
+						);
+
+					transform->Move();
+				}
+				else
+				{
+					transform->xSpeed = 0;
+					transform->ySpeed = 0;
+				}
+
+				if (input->a == true)
+				{
+					sprite->self.rotate(-transform->rotationSpeed);
+				}
+				else if (input->d == true)
+				{
+					sprite->self.rotate(transform->rotationSpeed);
 				}
 			}
-			else if (tag->ContainsTag("Projectile") == true)
+		}
+		else if (tag->ContainsTag("Projectile") == true || tag->ContainsTag("Object") == true)
+		{
+			transform->xSpeed = static_cast<float>(
+				sin((static_cast<double>(sprite->self.getRotation()) + 90.0) / 180.0 * M_PI) * static_cast<double>(transform->xSpeedMod)
+				);
+			transform->ySpeed = static_cast<float>(
+				-cos((static_cast<double>(sprite->self.getRotation()) + 90.0) / 180.0 * M_PI) * static_cast<double>(transform->ySpeedMod)
+				);
+		}
+		else if (tag->ContainsTag("Enemy") == true)
+		{
+			transform->xSpeed = static_cast<float>(
+				sin((static_cast<double>(sprite->self.getRotation()) + 90.0) / 180.0 * M_PI) * static_cast<double>(transform->xSpeedMod)/2
+				);
+			transform->ySpeed = static_cast<float>(
+				-cos((static_cast<double>(sprite->self.getRotation()) + 90.0) / 180.0 * M_PI) * static_cast<double>(transform->ySpeedMod)/2
+				);
+
+			transform->Move();
+
+			if (this->timer > 30000.0f)
 			{
-				
+				//int random = (rand() % 360) + 1;
+				//int random = std::uniform_int_distribution<int>(1, 360)(std::random_device{}());
+				std::random_device rd;
+				std::mt19937 gen(rd());
+				std::uniform_int_distribution<> distribution(1, 360);
+				int random = distribution(gen);
+
+
+
+				sprite->self.setRotation(random + 90.0f);
+				this->timer = 0.0f;
 			}
-		});
+		}
+			});
+	}
 }

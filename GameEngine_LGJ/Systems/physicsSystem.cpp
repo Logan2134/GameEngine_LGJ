@@ -1,4 +1,5 @@
 #include "physicsSystem.h"
+#include "../Interface/States.h"
 
 bool physicsSystem::IsColliding(ECS::ComponentHandle<BoxCollider> touchingBox, ECS::ComponentHandle<BoxCollider> touchedBox, float x, float y)
 {
@@ -140,8 +141,7 @@ void physicsSystem::PushEntity(ECS::Entity* touchingEntity, ECS::Entity* touched
 
     float newTouchedX = touchedEntity->get<Transform>()->xPos;
     float newTouchedY = touchedEntity->get<Transform>()->yPos;
-    float newTouchedXSpeed = touchedEntity->get<Transform>()->xSpeed;
-    float newTouchedYSpeed = touchedEntity->get<Transform>()->ySpeed;
+
 
     if (std::find(
         touchedEntity->get<Tag>()->tagNames.begin(),
@@ -149,9 +149,9 @@ void physicsSystem::PushEntity(ECS::Entity* touchingEntity, ECS::Entity* touched
         "Object") != touchedEntity->get<Tag>()->tagNames.end())
     {
         if (std::find(
-            touchedEntity->get<Tag>()->tagNames.begin(),
-            touchedEntity->get<Tag>()->tagNames.end(),
-            "Player") != touchedEntity->get<Tag>()->tagNames.end())
+            touchingEntity->get<Tag>()->tagNames.begin(),
+            touchingEntity->get<Tag>()->tagNames.end(),
+            "Player") != touchingEntity->get<Tag>()->tagNames.end())
         {
             if (newTouchingXSpeed > 0 &&
                 newTouchingX < newTouchedX)
@@ -183,31 +183,34 @@ void physicsSystem::PushEntity(ECS::Entity* touchingEntity, ECS::Entity* touched
 
 void physicsSystem::tick(ECS::World* world, float DeltaTime)
 {
-    world->each<BoxCollider, Sprite2D, Transform>(
-        [&](ECS::Entity* entity, ECS::ComponentHandle<BoxCollider> colider, ECS::ComponentHandle<Sprite2D> sprite, ECS::ComponentHandle<Transform> transform) -> void
-        {
-            colider->update(transform->xPos, transform->yPos, sprite->self.getTextureRect().width, sprite->self.getTextureRect().height);
-        });
-        
-    world->each<BoxCollider, Transform>(
-        [&](ECS::Entity* touchingEntity, ECS::ComponentHandle<BoxCollider> touchingBox, ECS::ComponentHandle<Transform> transform) -> void
-        {
-            world->each<BoxCollider>(
-                [&](ECS::Entity* touchedEntity, ECS::ComponentHandle<BoxCollider> toucedBox)-> void
-                {
-                    //avoid comparing the same entity to itself
-                    if (touchingEntity->getEntityId() == touchedEntity->getEntityId() || IsColliding(touchingBox, toucedBox) == false)
+    if (States::GetPausedState() == false)
+    {
+        world->each<BoxCollider, Sprite2D, Transform>(
+            [&](ECS::Entity* entity, ECS::ComponentHandle<BoxCollider> colider, ECS::ComponentHandle<Sprite2D> sprite, ECS::ComponentHandle<Transform> transform) -> void
+            {
+                colider->update(transform->xPos, transform->yPos, sprite->self.getTextureRect().width, sprite->self.getTextureRect().height);
+            });
+
+        world->each<BoxCollider, Transform>(
+            [&](ECS::Entity* touchingEntity, ECS::ComponentHandle<BoxCollider> touchingBox, ECS::ComponentHandle<Transform> transform) -> void
+            {
+                world->each<BoxCollider>(
+                    [&](ECS::Entity* touchedEntity, ECS::ComponentHandle<BoxCollider> toucedBox)-> void
                     {
-                        return;
-                    }
-    PushEntity(touchingEntity, touchedEntity);
-                });
-        });
+                        //avoid comparing the same entity to itself
+                        if (touchingEntity->getEntityId() == touchedEntity->getEntityId() || IsColliding(touchingBox, toucedBox) == false)
+                        {
+                            return;
+                        }
+        PushEntity(touchingEntity, touchedEntity);
+                    });
+            });
 
-    world->each<Transform>(
-        [&](ECS::Entity* entity, ECS::ComponentHandle<Transform> transform) -> void
-        {
-            transform->Move();
-        });
+        world->each<Transform>(
+            [&](ECS::Entity* entity, ECS::ComponentHandle<Transform> transform) -> void
+            {
+                transform->Move();
+            });
 
+    }
 }
